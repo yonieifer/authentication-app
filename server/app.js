@@ -7,11 +7,11 @@ import logger from "./middleware/logger.js"
 
 const app = express()
 
-app.use(logger)
-
 app.use(express.json())
 
 app.use(cors())
+
+app.use(logger)
 
 app.post("/sign-up", async (req, res) => {
     const { username, email, password } = req.body
@@ -24,13 +24,17 @@ app.post("/sign-up", async (req, res) => {
 app.post("/log-in", async (req, res) => {
     const { username, email, password } = req.body
     if (!username || !email || !password) return res.status(400).json({ message: "Body is missing required fields" })
-    const token = await logIn(username, email, password)
+        const token = await logIn(username, email, password)
     res.status(201).json({ token })
 })
 
 
-app.get("/user-profile", authMiddleware, async (req, res) => {
-    const { email } = req.body
+app.get("/user-profile/:email", authMiddleware, async (req, res) => {
+    const { email } = req.params 
+    console.log("e:", email);
+     
+    console.log(email);
+      
     if (!email) return res.status(400).json({ message: "email field is required" })
     const userProfile = await viewUserProfile(email)
     res.json({ user: userProfile })

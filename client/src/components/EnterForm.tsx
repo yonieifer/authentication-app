@@ -1,7 +1,12 @@
 import { useState } from "react";
 
 interface FormProps {
-    onSubmit: (username: string, email: string, password: string) => void;
+    onSubmit: (
+        actionUrl: string,
+        username: string,
+        email: string,
+        password: string,
+    ) => void;
     action: string;
 }
 
@@ -35,9 +40,9 @@ function EnterForm({ onSubmit, action }: FormProps) {
                     value={password}
                 />
             </form>
-                <button onClick={() => onSubmit(username, email, password)}>
-                    {action.toUpperCase()}
-                </button>
+            <button onClick={() => onSubmit(action, username, email, password)}>
+                {action.toUpperCase()}
+            </button>
         </>
     );
 }
