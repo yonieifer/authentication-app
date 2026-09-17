@@ -5,7 +5,7 @@ function Header() {
     const navigate = useNavigate()
     const onLogout = () => {
         localStorage.removeItem("token")
-        navigate("/log-in")
+        navigate("/")
     }
     return (
         <>
