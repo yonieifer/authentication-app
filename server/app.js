@@ -1,10 +1,17 @@
 import express from "express"
+import cors from "cors"
 import { signUp, logIn, viewUserProfile } from "./services/authService.js"
 import authMiddleware from "./middleware/authMiddleware.js"
+import errorHandler from "./middleware/errorHandler.js"
+import logger from "./middleware/logger.js"
 
 const app = express()
 
+app.use(logger)
+
 app.use(express.json())
+
+app.use(cors())
 
 app.post("/sign-up", async (req, res) => {
     const { username, email, password } = req.body
@@ -27,6 +34,8 @@ app.get("/user-profile", authMiddleware, async (req, res) => {
     const userProfile = await viewUserProfile(email)
     res.json({ user: userProfile })
 })
+
+app.use(errorHandler)
 
 // app.get("/") אותוריזציה
 
