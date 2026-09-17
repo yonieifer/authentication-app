@@ -1,5 +1,5 @@
 import express from "express"
-import { signUp, logIn } from "./services/authService.js"
+import { signUp, logIn, viewUserProfile } from "./services/authService.js"
 
 const app = express()
 
@@ -19,8 +19,11 @@ app.post("/log-in", async (req, res) => {
     res.status(201).json({token})
 })
 
-app.get("/user-profile", (req, res) => {
-    
+app.get("/user-profile", async (req, res) => {
+    const {email} = req.body
+    if (!email) return res.status(400).json({message: "email field is required"})
+    const userProfile = await viewUserProfile(email)
+    res.json({user: userProfile})
 })
 
 // app.get("/") אותוריזציה
