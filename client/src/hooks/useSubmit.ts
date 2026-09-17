@@ -21,7 +21,7 @@ export default () => {
                 password,
             })
             .then((res) => setToken(res.data.token))
-            .catch((error) => setError(error))
+            .catch((error: AxiosError) => setError(error))
             .finally(() => setLoading(false));
     };
     return { submit, error, loading, token };

@@ -8,9 +8,9 @@ function SignUpPage() {
     const onSignUp = (username: string, email: string, password: string) => {
         submit("sign-up", username, email, password);
         if (token) {
-            localStorage.setItem("token", token)
-            navigate("/user-profile")
-        };
+            localStorage.setItem("token", token);
+            navigate("/user-profile");
+        }
     };
     return (
         <>

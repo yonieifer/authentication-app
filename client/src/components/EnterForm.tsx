@@ -34,10 +34,10 @@ function EnterForm({ onSubmit, action }: FormProps) {
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                 />
+            </form>
                 <button onClick={() => onSubmit(username, email, password)}>
                     {action.toUpperCase()}
                 </button>
-            </form>
         </>
     );
 }
