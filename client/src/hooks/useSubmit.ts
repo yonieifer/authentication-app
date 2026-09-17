@@ -1,23 +1,28 @@
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 
-export default <T>() => {
+export default () => {
     const [error, setError] = useState<AxiosError | null>(null);
     const [loading, setLoading] = useState(false);
-    const [signed, setSigned] = useState<T | null>(null);
+    const [token, setToken] = useState<string | null>(null);
 
-    const signUp = (username: string, email: string, password: string) => {
+    const submit = (
+        actionUrl: string,
+        username: string,
+        email: string,
+        password: string,
+    ) => {
         setLoading(true);
         setError(null);
         axios
-            .post("http://localhost:3000/sign-up", {
+            .post(`http://localhost:3000/${actionUrl}`, {
                 username,
                 email,
                 password,
             })
-            .then((res) => setSigned(res.data))
+            .then((res) => setToken(res.data.token))
             .catch((error) => setError(error))
             .finally(() => setLoading(false));
     };
-    return {signUp, error, loading, signed}
+    return { submit, error, loading, token };
 };

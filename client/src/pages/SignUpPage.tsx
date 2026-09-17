@@ -1,13 +1,16 @@
 import EnterForm from "../components/EnterForm";
-import useSignUp from "../hooks/useSignUp";
+import useSignUp from "../hooks/useSubmit";
 import { useNavigate } from "react-router-dom";
 
 function SignUpPage() {
-    const { signUp, error, loading, signed } = useSignUp();
+    const { submit, error, loading, token } = useSignUp();
     const navigate = useNavigate();
     const onSignUp = (username: string, email: string, password: string) => {
-        signUp(username, email, password);
-        if (signed) navigate("/user-profile");
+        submit("sign-up", username, email, password);
+        if (token) {
+            localStorage.setItem("token", token)
+            navigate("/user-profile")
+        };
     };
     return (
         <>
