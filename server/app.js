@@ -17,7 +17,8 @@ app.post("/sign-up", async (req, res) => {
     const { username, email, password } = req.body
     if (!username || !email || !password) return res.status(400).json({ message: "Body is missing required fields" })
     await signUp(username, email, password)
-    res.status(201).json({ message: "Successfully registered" })
+    const token = await logIn(username, email, password)
+    res.status(201).json({ token })
 })
 
 app.post("/log-in", async (req, res) => {
